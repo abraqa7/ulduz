@@ -1,0 +1,361 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>be1.ru</title>
+</head>
+<body>
+<p>Для создания простого веб-расписания с днями недели, временем с 10:00 до 22:00 и возможностью внесения изменений и сохранения данных, можно использовать HTML и JavaScript. Для сохранения данных между сессиями можно использовать localStorage, так как это позволяет сохранить данные прямо в браузере без серверной стороны. Я также добавлю список учеников, которых можно будет добавлять.</p>
+
+<p>&nbsp;</p>
+
+<p>Пример кода:</p>
+
+<p>&nbsp;</p>
+
+<p>&lt;!DOCTYPE html&gt;</p>
+
+<p>&lt;html lang=&quot;ru&quot;&gt;</p>
+
+<p>&lt;head&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;meta charset=&quot;UTF-8&quot;&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;title&gt;Расписание уроков&lt;/title&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;style&gt;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; body {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; font-family: Arial, sans-serif;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background-color: #f4f4f4;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; margin: 20px;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; }</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; table {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; width: 100%;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; border-collapse: collapse;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; }</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; th, td {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; border: 1px solid #ddd;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; padding: 8px;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; text-align: center;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; }</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; th {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; background-color: #f2f2f2;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; }</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; input, select {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; width: 100%;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; padding: 5px;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; }</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; .actions {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; margin-top: 20px;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; }</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; .input-container {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; margin-bottom: 10px;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; }</p>
+
+<p>&nbsp; &nbsp; &lt;/style&gt;</p>
+
+<p>&lt;/head&gt;</p>
+
+<p>&lt;body&gt;</p>
+
+<p>&nbsp;</p>
+
+<p>&lt;h1&gt;Расписание уроков&lt;/h1&gt;</p>
+
+<p>&nbsp;</p>
+
+<p>&lt;!-- Список учеников --&gt;</p>
+
+<p>&lt;div class=&quot;input-container&quot;&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;label for=&quot;studentName&quot;&gt;Добавить ученика:&lt;/label&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;input type=&quot;text&quot; id=&quot;studentName&quot; placeholder=&quot;Имя ученика&quot;&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;button onclick=&quot;addStudent()&quot;&gt;Добавить ученика&lt;/button&gt;</p>
+
+<p>&lt;/div&gt;</p>
+
+<p>&nbsp;</p>
+
+<p>&lt;h3&gt;Список учеников:&lt;/h3&gt;</p>
+
+<p>&lt;ul id=&quot;studentList&quot;&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;!-- Список учеников будет отображаться здесь --&gt;</p>
+
+<p>&lt;/ul&gt;</p>
+
+<p>&nbsp;</p>
+
+<p>&lt;!-- Расписание --&gt;</p>
+
+<p>&lt;h3&gt;Расписание&lt;/h3&gt;</p>
+
+<p>&lt;table&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;thead&gt;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &lt;tr&gt;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;th&gt;Время&lt;/th&gt;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;th&gt;Понедельник&lt;/th&gt;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;th&gt;Вторник&lt;/th&gt;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;th&gt;Среда&lt;/th&gt;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;th&gt;Четверг&lt;/th&gt;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;th&gt;Пятница&lt;/th&gt;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;th&gt;Суббота&lt;/th&gt;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;th&gt;Воскресенье&lt;/th&gt;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &lt;/tr&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;/thead&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;tbody id=&quot;schedule&quot;&gt;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &lt;!-- Строки расписания будут сгенерированы через JavaScript --&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;/tbody&gt;</p>
+
+<p>&lt;/table&gt;</p>
+
+<p>&nbsp;</p>
+
+<p>&lt;div class=&quot;actions&quot;&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;button onclick=&quot;saveSchedule()&quot;&gt;Сохранить изменения&lt;/button&gt;</p>
+
+<p>&nbsp; &nbsp; &lt;button onclick=&quot;loadSchedule()&quot;&gt;Загрузить расписание&lt;/button&gt;</p>
+
+<p>&lt;/div&gt;</p>
+
+<p>&nbsp;</p>
+
+<p>&lt;script&gt;</p>
+
+<p>&nbsp; &nbsp; // Список учеников</p>
+
+<p>&nbsp; &nbsp; let students = JSON.parse(localStorage.getItem(&#39;students&#39;)) || [];</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp; &nbsp; // Функция для добавления ученика</p>
+
+<p>&nbsp; &nbsp; function addStudent() {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; const studentName = document.getElementById(&#39;studentName&#39;).value.trim();</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; if (studentName) {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; students.push(studentName);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; document.getElementById(&#39;studentName&#39;).value = &#39;&#39;; // Очистить поле ввода</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; updateStudentList();</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; saveStudents();</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; }</p>
+
+<p>&nbsp; &nbsp; }</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp; &nbsp; // Функция для обновления списка учеников</p>
+
+<p>&nbsp; &nbsp; function updateStudentList() {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; const studentListElement = document.getElementById(&#39;studentList&#39;);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; studentListElement.innerHTML = &#39;&#39;;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; students.forEach(student =&gt; {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const li = document.createElement(&#39;li&#39;);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; li.textContent = student;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; studentListElement.appendChild(li);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; });</p>
+
+<p>&nbsp; &nbsp; }</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp; &nbsp; // Сохранение списка учеников в localStorage</p>
+
+<p>&nbsp; &nbsp; function saveStudents() {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; localStorage.setItem(&#39;students&#39;, JSON.stringify(students));</p>
+
+<p>&nbsp; &nbsp; }</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp; &nbsp; // Генерация расписания</p>
+
+<p>&nbsp; &nbsp; const times = [];</p>
+
+<p>&nbsp; &nbsp; for (let i = 10; i &lt;= 22; i++) {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; times.push(i + &#39;:00&#39;);</p>
+
+<p>&nbsp; &nbsp; }</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp; &nbsp; function generateSchedule() {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; const scheduleTable = document.getElementById(&#39;schedule&#39;);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; scheduleTable.innerHTML = &#39;&#39;; // Очистить таблицу перед рендером</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; times.forEach(time =&gt; {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const row = document.createElement(&#39;tr&#39;);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const timeCell = document.createElement(&#39;td&#39;);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; timeCell.textContent = time;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; row.appendChild(timeCell);</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for (let i = 0; i &lt; 7; i++) {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const cell = document.createElement(&#39;td&#39;);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const input = document.createElement(&#39;input&#39;);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; input.type = &#39;text&#39;;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; input.id = `schedule-${time}-${i}`;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; cell.appendChild(input);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; row.appendChild(cell);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; scheduleTable.appendChild(row);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; });</p>
+
+<p>&nbsp; &nbsp; }</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp; &nbsp; // Сохранение расписания в localStorage</p>
+
+<p>&nbsp; &nbsp; function saveSchedule() {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; const scheduleData = [];</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; times.forEach(time =&gt; {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const rowData = [];</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for (let i = 0; i &lt; 7; i++) {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const input = document.getElementById(`schedule-${time}-${i}`);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; rowData.push(input.value);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; scheduleData.push({ time: time, data: rowData });</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; });</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; localStorage.setItem(&#39;schedule&#39;, JSON.stringify(scheduleData));</p>
+
+<p>&nbsp; &nbsp; }</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp; &nbsp; // Загрузка расписания из localStorage</p>
+
+<p>&nbsp; &nbsp; function loadSchedule() {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; const scheduleData = JSON.parse(localStorage.getItem(&#39;schedule&#39;)) || [];</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; scheduleData.forEach(item =&gt; {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const time = item.time;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const rowData = item.data;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; rowData.forEach((value, index) =&gt; {</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const input = document.getElementById(`schedule-${time}-${index}`);</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; input.value = value;</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; });</p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; });</p>
+
+<p>&nbsp; &nbsp; }</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp; &nbsp; // Инициализация страницы</p>
+
+<p>&nbsp; &nbsp; generateSchedule();</p>
+
+<p>&nbsp; &nbsp; updateStudentList();</p>
+
+<p>&lt;/script&gt;</p>
+
+<p>&nbsp;</p>
+
+<p>&lt;/body&gt;</p>
+
+<p>&lt;/html&gt;</p>
+
+<p>&nbsp;</p>
+</body>
+</html>
